@@ -1,0 +1,89 @@
+{
+  "name": "vscode-slugify",
+  "version": "0.0.0",
+  "description": "VSCode slugify functions",
+  "keywords": [
+    "vscode",
+    "slugify",
+    "slugifier"
+  ],
+  "license": "MIT",
+  "author": "meteorlxy",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rimraf dist",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
+    "prepare": "husky install",
+    "release": "pnpm clean && pnpm build && pnpm lint && pnpm publish && git push origin main --tags",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1 && git add CHANGELOG.md"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.{json,md,yml}": "prettier --write",
+    "package.json": "sort-package-json"
+  },
+  "prettier": "@meteorlxy/prettier-config",
+  "devDependencies": {
+    "@commitlint/cli": "^16.3.0",
+    "@commitlint/config-conventional": "^16.2.4",
+    "@meteorlxy/eslint-config-prettier": "^2.9.0",
+    "@meteorlxy/eslint-config-prettier-typescript": "^2.9.0",
+    "@meteorlxy/prettier-config": "^2.7.0",
+    "@meteorlxy/tsconfig": "^2.7.0",
+    "conventional-changelog-cli": "^2.2.2",
+    "eslint": "^8.15.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1",
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
+    "sort-package-json": "^1.57.0",
+    "tsup": "^5.12.7",
+    "typescript": "^4.6.4"
+  },
+  "engines": {
+    "node": ">=14",
+    "pnpm": ">=7"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "eslint-plugin-import"
+      ]
+    }
+  },
+  "tsup": {
+    "dts": [
+      "src/index.ts"
+    ],
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "outDir": "dist",
+    "sourcemap": false,
+    "target": "es2020"
+  }
+}
