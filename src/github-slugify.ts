@@ -5,6 +5,8 @@
 
 // forked from https://github.com/microsoft/vscode/blob/1.67.1/extensions/markdown-language-features/src/slugify.ts
 
+/* eslint-disable no-useless-escape */
+
 import type { Slugify } from './types';
 
 export const githubSlugify: Slugify = (str) =>
