@@ -26,10 +26,13 @@
   "scripts": {
     "build": "tsup",
     "clean": "rimraf dist",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "prepare": "husky install",
-    "release": "pnpm clean && pnpm build && pnpm lint && pnpm publish && git push origin main --tags",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1 && git add CHANGELOG.md"
+    "lint": "eslint .",
+    "prepare": "husky",
+    "release": "pnpm release:check && pnpm release:version && pnpm release:publish",
+    "release:changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1 && git add CHANGELOG.md",
+    "release:check": "pnpm clean && pnpm build && pnpm lint",
+    "release:publish": "pnpm publish",
+    "release:version": "bumpp -r --execute=\"pnpm release:changelog\" --commit \"build: publish v%s\" --all"
   },
   "commitlint": {
     "extends": [
@@ -37,7 +40,7 @@
     ]
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*.{js,ts}": "eslint --fix",
     "*.{json,md,yml}": "prettier --write",
     "package.json": "sort-package-json"
   },
@@ -48,6 +51,7 @@
     "@meteorlxy/eslint-config": "^4.9.1",
     "@meteorlxy/prettier-config": "^4.9.0",
     "@meteorlxy/tsconfig": "^4.8.0",
+    "bumpp": "^10.1.0",
     "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9.24.0",
     "husky": "^9.1.7",
